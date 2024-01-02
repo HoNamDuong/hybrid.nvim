@@ -9,7 +9,7 @@ M.palette = {
     bright_yellow   = "#e7c547",
     bright_green    = "#b9ca4a",
     bright_blue     = "#7aa6da",
-    bright_magent   = "#c397d8",
+    bright_magenta  = "#c397d8",
     bright_cyan     = "#70c0b1",
     bright_white    = "#eaeaea",
 
