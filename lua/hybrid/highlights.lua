@@ -94,7 +94,7 @@ function M.setup(opts)
         -- Repeat = {},
         -- Label = {},
         Operator = { fg = c.blue },
-        Keyword = { fg = c.cyan },
+        Keyword = { fg = c.magenta },
         -- Exception = {},
         PreProc = { fg = c.cyan },
         -- Include = {},
@@ -105,7 +105,7 @@ function M.setup(opts)
         -- StorageClass = {},
         -- Structure = {},
         -- Typedef = {},
-        Special = { fg = c.cyan },
+        Special = { fg = c.bright_blue },
         -- SpecialChar = {},
         -- Tag = {},
         -- Delimiter = {},
@@ -170,6 +170,7 @@ function M.setup(opts)
         -- Keywords (Keyword) {{{
         -- @keyword                                    ; various keywords
         -- @keyword.function                           ; keywords that define a function (e.g. `func` in Go, `def` in Python)
+        ["@keyword.function"] = { fg = c.bright_magenta },
         -- @keyword.operator                           ; operators that are English words (e.g. `and` / `or`)
         -- @keyword.return                             ; keywords like `return` and `yield`
 
@@ -186,7 +187,7 @@ function M.setup(opts)
         -- Types {{{
         -- @type (Type)                                ; type or class definitions and annotations
         -- @type.builtin                               ; built-in types
-        ["@type.builtin"] = { fg = utils.darken(c.blue, 0.8) },
+        ["@type.builtin"] = { fg = utils.darken(c.bright_blue, 0.8) },
         -- @type.definition (TypeDef)                  ; type definitions (e.g. `typedef` in C)
         -- @type.qualifier                             ; type qualifiers (e.g. `const`)
 
@@ -195,9 +196,9 @@ function M.setup(opts)
         -- @storageclass (StorageClass)                ; modifiers that affect storage in memory or life-time
         -- @attribute                                  ; attribute annotations (e.g. Python decorators)
         -- @field (Identifier)                         ; object and struct fields
-        ["@field"] = { fg = c.green },
+        ["@field"] = { fg = c.cyan },
         -- @property (Identifier)                      ; similar to `@field`
-        ["@property"] = { fg = c.green },
+        ["@property"] = { fg = c.cyan },
         -- }}}
 
         --Identifiers {{{
