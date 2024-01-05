@@ -5,28 +5,36 @@ local M = {}
 -- stylua: ignore start
 M.palette = {
     bright_black    = "#373b41",
-    bright_red      = "#d54e53",
-    bright_yellow   = "#e7c547",
-    bright_green    = "#b9ca4a",
-    bright_blue     = "#7aa6da",
-    bright_magenta  = "#c397d8",
-    bright_cyan     = "#70c0b1",
-    bright_white    = "#eaeaea",
-
     black           = "#1d1f21",
-    red             = "#cc6666",
-    yellow          = "#f0c674",
-    green           = "#b5bd68",
-    blue            = "#81a2be",
-    magenta         = "#b294bb",
-    cyan            = "#8abeb7",
+    dull_black      = "#151718",
+
+    bright_white    = "#eaeaea",
     white           = "#c5c8c6",
+    dull_white      = "#707880",
 
-    dark            = "#151718",
-    gray            = "#707880",
+    bright_red      = "#d54e53",
+    red             = "#cc6666",
+    dull_red        = "#a54242",
 
-    bright_orange   = "#db8743",
-    orange          = "#de935f",
+    bright_green    = "#b9ca4a",
+    green           = "#b5bd68",
+    dull_green      = "#8c9440",
+
+    bright_yellow   = "#e7c547",
+    yellow          = "#f0c674",
+    dull_yellow     = "#de935f",
+
+    bright_blue     = "#7aa6da",
+    blue            = "#81a2be",
+    dull_blue       = "#5f819d",
+
+    bright_magenta  = "#c397d8",
+    magenta         = "#b294bb",
+    dull_magenta    = "#85678f",
+
+    bright_cyan     = "#70c0b1",
+    cyan            = "#8abeb7",
+    dull_cyan       = "#5e8d87",
 }
 -- stylua: ignore end
 
@@ -37,10 +45,11 @@ function M.setup()
     local colors = {
         none            = "NONE",
 
-        bg_hard         = p.dark,
+        bg_hard         = p.dull_black,
         bg              = p.black,
         bg_soft         = p.bright_black,
-        fg_soft         = p.gray,
+
+        fg_soft         = p.dull_white,
         fg              = p.white,
         fg_hard         = p.bright_white,
 
@@ -58,14 +67,18 @@ function M.setup()
         magenta         = p.magenta,
         cyan            = p.cyan,
 
-        bright_orange   = p.bright_orange,
-        orange          = p.orange,
+        dull_red        = p.dull_red,
+        dull_green      = p.dull_green,
+        dull_yellow     = p.dull_yellow,
+        dull_blue       = p.dull_blue,
+        dull_magenta    = p.dull_magenta,
+        dull_cyan       = p.dull_cyan,
 
         diff = {
-            delete      = utils.darken(p.red, 0.8, p.bg),
-            add         = utils.darken(p.green, 0.8, p.bg),
-            change      = utils.darken(p.blue, 0.8, p.bg),
-            text        = p.gray,
+            delete      = p.dull_red,
+            add         = p.dull_green,
+            change      = p.dull_blue,
+            text        = p.dull_white,
         },
 
         diag = {
@@ -77,13 +90,13 @@ function M.setup()
         },
 
         float = {
-            bg          = p.dark,
-            border      = utils.darken(p.blue, 0.8, p.dark),
+            bg          = p.dull_black,
+            border      = p.dull_blue,
             title       = p.blue,
         },
 
         line            = utils.darken(p.bright_black, 0.3, p.black),
-        comment         = p.gray,
+        comment         = p.dull_white,
         selection       = p.bright_black,
         match           = p.blue,
         primary         = p.bright_blue,
