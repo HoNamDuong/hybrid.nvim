@@ -8,6 +8,7 @@ function M.setup(opts)
     local highlights = {
         -- Highlight default
         -- :h highlight-default
+        -- {{{
         ColorColumn = { bg = c.bg_hard },
         Conceal = { fg = c.primary },
         CurSearch = { fg = c.green, bg = c.bg, reverse = opts.inverse },
@@ -29,7 +30,7 @@ function M.setup(opts)
         Folded = { fg = c.fg_soft, bg = c.line, italic = opts.italic.folds },
         FoldColumn = { fg = c.fg_soft, bg = opts.transparent and c.none or c.bg },
         SignColumn = { fg = c.fg_soft, bg = opts.transparent and c.none or c.bg },
-        IncSearch = { fg = c.orange, bg = c.bg, reverse = opts.inverse },
+        IncSearch = { fg = c.dull_yellow, bg = c.bg, reverse = opts.inverse },
         -- Substitute = {},
         LineNr = { fg = c.bg_soft, bg = opts.transparent and c.none or c.bg },
         -- LineNrAbove = {},
@@ -77,229 +78,209 @@ function M.setup(opts)
         WildMenu = { fg = c.fg, bg = c.selection, bold = opts.bold },
         WinBar = { fg = c.fg, bg = c.bg },
         WinBarNC = { fg = c.fg, bg = c.bg },
+        -- }}}
 
         -- Syntax highlighting
         -- :h group-name
+        -- {{{
         Comment = { fg = c.comment, italic = opts.italic.comments },
-        Constant = { fg = c.orange },
+
+        Constant = { fg = c.dull_yellow },
         String = { fg = c.green, italic = opts.italic.strings },
         Character = { fg = c.green },
         -- Number = {},
         -- Boolean = {},
         -- Float = {},
-        Identifier = { fg = c.magenta },
+
+        Identifier = { fg = c.fg },
         Function = { fg = c.blue },
+
         Statement = { fg = c.magenta },
         -- Conditional = {},
         -- Repeat = {},
         -- Label = {},
         Operator = { fg = c.blue },
-        Keyword = { fg = c.magenta },
+        -- Keyword = {},
         -- Exception = {},
-        PreProc = { fg = c.cyan },
+
+        PreProc = { fg = c.magenta, italic = opts.italic.emphasis },
         -- Include = {},
         -- Define = {},
         -- Macro = {},
         -- PreCondit = {},
+
         Type = { fg = c.bright_cyan },
         -- StorageClass = {},
         -- Structure = {},
         -- Typedef = {},
-        Special = { fg = c.bright_blue },
+
+        Special = { fg = utils.lighten(c.blue, 0.6) },
         -- SpecialChar = {},
         -- Tag = {},
         -- Delimiter = {},
         -- SpecialComment = {},
-        Debug = { fg = c.orange },
+        Debug = { fg = c.dull_yellow },
+
         Underlined = { underline = opts.underline },
+
         Ignore = { link = "NonText" },
+
         Error = { fg = c.diag.error, reverse = opts.inverse },
+
         Todo = { fg = c.diag.hint, reverse = opts.inverse }, -- TODO FIXME XXX
+        -- }}}
 
         -- Treesitter
-        -- Misc {{{
-        -- @comment (Comment)                          ; line and block comments
-        -- @error                                      ; syntax/parser errors
-        -- @none                                       ; completely disable the highlight
-        ["@none"] = { fg = c.none, bg = c.none },
-        -- @preproc (PreProc)                          ; various preprocessor directives & shebangs
-        -- @define (Define)                            ; preprocessor definition directives
-        -- @operator (Operator)                        ; symbolic operators (e.g. `+` / `*`)
-        ["@operator"] = { link = "Operator" },
+        -- :h treesitter-highlight
+        -- Source https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
+        -- {{{
+        -- -- Misc
+        -- @comment (Comment)                   ; line and block comments
+        -- @comment.documentation               ; comments documenting code
+        -- @error                               ; syntax/parser errors
+        -- @none                                ; completely disable the highlight
+        -- @preproc (PreProc)                   ; various preprocessor directives & shebangs
+        -- @define (Define)                     ; preprocessor definition directives
+        -- @operator (Operator)                 ; symbolic operators (e.g. `+` / `*`)
 
-        -- Punctuation (Delimiter)
-        -- @punctuation.delimiter                      ; delimiters (e.g. ` ; ` / `.` / `,`)
-        ["@punctuation.delimiter"] = { fg = c.bright_blue },
-        -- @punctuation.bracket                        ; brackets (e.g. `()` / `{}` / `[]`)
+        ["@none"] = {},
+
+        -- -- Punctuation (Delimiter)
+        -- @punctuation.delimiter               ; delimiters (e.g. `;` / `.` / `,`)
+        -- @punctuation.bracket                 ; brackets (e.g. `()` / `{}` / `[]`)
+        -- @punctuation.special                 ; special symbols (e.g. `{}` in string interpolation)
+
         ["@punctuation.bracket"] = { fg = c.fg },
-        -- @punctuation.special                        ; special symbols (e.g. `{}` in string interpolation)
-        ["@punctuation.special"] = { fg = c.bright_blue },
-        -- }}}
 
-        -- Literals {{{
-        -- @string (String)                            ; string literals
-        -- @string.regex                               ; regular expressions
-        ["@string.regex"] = { fg = c.yellow },
-        -- @string.escape (SpecialChar)                ; escape sequences
+        -- -- Literals
+        -- @string (String)                     ; string literals
+        -- @string.documentation                ; string documenting code (e.g. Python docstrings)
+        -- @string.regex                        ; regular expressions
+        -- @string.escape (SpecialChar)         ; escape sequences
+        -- @string.special (SpecialChar)        ; other special strings (e.g. dates)
+
+        -- @character (Character)               ; character literals
+        -- @character.special (SpecialChar)     ; special characters (e.g. wildcards)
+
+        -- @boolean (Boolean)                   ; boolean literals
+        -- @number (Number)                     ; numeric literals
+        -- @float (Float)                       ; floating-point number literals
+
         ["@string.escape"] = { fg = c.magenta },
-        -- @string.special (SpecialChar)               ; other special strings (e.g. dates)
 
-        -- @character (Character)                      ; character literals
-        -- @character.special (Special)                ; special characters (e.g. wildcards)
+        -- -- Functions
+        -- @function (Function)                 ; function definitions
+        -- @function.builtin (Special)          ; built-in functions
+        -- @function.call                       ; function calls
+        -- @function.macro (Macro)              ; preprocessor macros
 
-        -- @boolean (Boolean)                          ; boolean literals
-        -- @number (Number)                            ; numeric literals
-        -- @float (Float)                              ; floating-point number literals
-        -- }}}
+        -- @method (Function)                   ; method definitions
+        -- @method.call                         ; method calls
 
-        -- Functions {{{
-        -- @function (Function)                        ; function definitions
-        -- @function.builtin (Special)                 ; built-in functions
-        -- @function.call                              ; function calls
-        -- @function.macro (Macro)                     ; preprocessor macros
+        -- @constructor (Special)               ; constructor calls and definitions
+        -- @parameter (Identifier)              ; parameters of a function
 
-        -- @method (Function)                          ; method definitions
-        -- @method.call                                ; method calls
-
-        -- @constructor (Special)                      ; constructor calls and definitions
-        ["@constructor"] = { fg = c.magenta },
-        -- @parameter (Identifier)                     ; parameters of a function
         ["@parameter"] = { fg = c.yellow },
-        -- }}}
 
-        -- Keywords (Keyword) {{{
-        -- @keyword                                    ; various keywords
-        -- @keyword.function                           ; keywords that define a function (e.g. `func` in Go, `def` in Python)
-        ["@keyword.function"] = { fg = c.bright_magenta },
-        -- @keyword.operator                           ; operators that are English words (e.g. `and` / `or`)
-        -- @keyword.return                             ; keywords like `return` and `yield`
+        -- -- Keywords
+        -- @keyword (Keyword)                   ; various keywords
+        -- @keyword.coroutine                   ; keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
+        -- @keyword.function                    ; keywords that define a function (e.g. `func` in Go, `def` in Python)
+        -- @keyword.operator                    ; operators that are English words (e.g. `and` / `or`)
+        -- @keyword.return                      ; keywords like `return` and `yield`
 
-        -- @conditional (Conditional -> Statement)     ; keywords related to conditionals (e.g. `if` / `else`)
-        -- @conditional.ternary                        ; Ternary operator: condition ? 1 : 2
-        -- @repeat (Repeat)                            ; keywords related to loops (e.g. `for` / `while`)
-        -- @debug (Debug)                              ; keywords related to debugging
-        -- @label (Label)                              ; GOTO and other labels (e.g. `label:` in C)
-        -- @include (Include)                          ; keywords for including modules (e.g. `import` / `from` in Python)
-        -- @exception (Exception)                      ; keywords related to exceptions (e.g. `throw` / `catch`)
-        ["@label"] = { fg = c.blue },
-        -- }}}
+        -- @conditional (Conditional)           ; keywords related to conditionals (e.g. `if` / `else`)
+        -- @conditional.ternary                 ; ternary operator (e.g. `?` / `:`)
 
-        -- Types {{{
-        -- @type (Type)                                ; type or class definitions and annotations
-        -- @type.builtin                               ; built-in types
-        ["@type.builtin"] = { fg = utils.darken(c.bright_blue, 0.8) },
-        -- @type.definition (TypeDef)                  ; type definitions (e.g. `typedef` in C)
-        -- @type.qualifier                             ; type qualifiers (e.g. `const`)
+        -- @repeat (Repeat)                     ; keywords related to loops (e.g. `for` / `while`)
+        -- @debug (Debug)                       ; keywords related to debugging
+        -- @label (Label)                       ; GOTO and other labels (e.g. `label:` in C)
+        -- @include (Include)                   ; keywords for including modules (e.g. `import` / `from` in Python)
+        -- @exception (Exception)               ; keywords related to exceptions (e.g. `throw` / `catch`)
 
-        -- @structure (Structure)
+        ["@keyword.operator"] = { link = "@operator" },
 
-        -- @storageclass (StorageClass)                ; modifiers that affect storage in memory or life-time
-        -- @attribute                                  ; attribute annotations (e.g. Python decorators)
-        -- @field (Identifier)                         ; object and struct fields
+        -- -- Types
+        -- @type (Type)                         ; type or class definitions and annotations
+        -- @type.builtin                        ; built-in types
+        -- @type.definition (Typedef)           ; identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
+        -- @type.qualifier                      ; type qualifiers (e.g. `const`)
+
+        -- @storageclass (StorageClass)         ; modifiers that affect storage in memory or life-time
+        -- @attribute                           ; attribute annotations (e.g. Python decorators)
+        -- @field (Identifier)                  ; object and struct fields
+        -- @property (Identifier)               ; similar to `@field`
+
         ["@field"] = { fg = c.cyan },
-        -- @property (Identifier)                      ; similar to `@field`
         ["@property"] = { fg = c.cyan },
-        -- }}}
 
-        --Identifiers {{{
-        -- @variable (Identifier)                      ; various variable names
-        ["@variable"] = { fg = c.fg },
-        -- @variable.builtin                           ; built-in variable names (e.g. `this`)
-        ["@variable.builtin"] = { fg = c.red, italic = true },
+        -- -- Identifiers
+        -- @variable (Identifier)               ; various variable names
+        -- @variable.builtin                    ; built-in variable names (e.g. `this`)
 
-        -- @constant (Constant)                        ; constant identifiers
-        -- @constant.builtin (Special)                 ; built-in constant values
-        -- @constant.macro (Define -> PreProc)         ; constants defined by the preprocessor
+        -- @constant (Constant)                 ; constant identifiers
+        -- @constant.builtin (Special)          ; built-in constant values
+        -- @constant.macro (Define)             ; constants defined by the preprocessor
 
-        -- @namespace (Identifier)                     ; modules or namespaces
-        ["@namespace"] = { link = "Include" },
+        -- @namespace (Identifier)              ; modules or namespaces
+        -- @symbol                              ; symbols or atoms
+
+        ["@variable.builtin"] = { fg = c.red },
         ["@namespace.builtin"] = { fg = c.red },
-        -- @symbol                                     ; symbols or atoms
-        -- }}}
 
-        -- Text {{{
-        -- @text                                       ; non-structured text
-        -- @text.strong                                ; bold text
-        -- @text.emphasis                              ; text with emphasis
+        -- -- Text
+        -- @text                                ; non-structured text
+        -- @text.strong                         ; bold text
+        -- @text.emphasis                       ; text with emphasis
+        -- @text.underline (Underlined)         ; underlined text
+        -- @text.strike                         ; strikethrough text
+        -- @text.title (Title)                  ; text that is part of a title
+        -- @text.quote                          ; text quotations
+        -- @text.uri (Underlined)               ; URIs (e.g. hyperlinks)
+        -- @text.math                           ; math environments (e.g. `$ ... $` in LaTeX)
+        -- @text.environment                    ; text environments of markup languages
+        -- @text.environment.name               ; text indicating the type of an environment
+        -- @text.reference (Identifier)         ; text references, footnotes, citations, etc.
+
+        -- @text.literal (Comment)              ; literal or verbatim text (e.g., inline code)
+        -- @text.literal.block                  ; literal or verbatim text as a stand-alone block
+        --                                      ; (use priority 90 for blocks with injections)
+
+        -- @text.todo (Todo)                    ; TODO notes
+        -- @text.note                           ; INFO notes
+        -- @text.warning                        ; WARNING notes
+        -- @text.danger                         ; ERROR notes
+
+        -- @text.diff.add                       ; added text (for diff files)
+        -- @text.diff.delete                    ; deleted text (for diff files)
+
+        ["@text.strong"] = { bold = opts.bold },
         ["@text.emphasis"] = { italic = opts.italic.emphasis },
-        -- @text.underline (Underlined)                ; underlined text
-        -- @text.strike                                ; strikethrough text
-        -- @text.title (Title)                         ; text that is part of a title
-        -- @text.literal (Comment)                     ; literal or verbatim text (e.g., inline code)
-        ["@text.literal.block.markdown"] = { fg = c.green },
-        -- @text.quote                                 ; text quotations
-        -- @text.uri (Underlined)                      ; URIs (e.g. hyperlinks)
-        -- @text.math                                  ; math environments (e.g. `$ ... $` in LaTeX)
-        -- @text.environment                           ; text environments of markup languages
-        -- @text.environment.name                      ; text indicating the type of an environment
-        -- @text.reference (Identifier)                ; text references, footnotes, citations, etc.
-        ["@text.reference"] = { fg = c.bright_cyan },
+        ["@text.strike"] = { strikethrough = opts.strikethrough },
 
-        -- @text.todo (Todo)                           ; TODO notes
+        ["@text.literal"] = { link = "String" },
+
         ["@text.todo"] = { fg = c.diag.hint, reverse = opts.inverse },
-        ["@text.todo.unchecked"] = { fg = c.blue },
-        ["@text.todo.checked"] = { fg = c.green },
-        -- @text.note                                  ; INFO notes
         ["@text.note"] = { fg = c.diag.info, reverse = opts.inverse },
-        -- @text.warning                               ; WARNING notes
         ["@text.warning"] = { fg = c.diag.warning, reverse = opts.inverse },
-        -- @text.danger                                ; ERROR notes
         ["@text.danger"] = { fg = c.diag.error, reverse = opts.inverse },
 
-        -- @text.diff.add                              ; added text (for diff files)
-        ["@text.diff.add"] = { link = "DiffAdd" },
-        -- @text.diff.delete                           ; deleted text (for diff files)
-        ["@text.diff.delete"] = { link = "DiffDelete" },
-        -- }}}
+        -- -- Tags
+        -- @tag (Tag)                           ; XML tag names
+        -- @tag.attribute                       ; XML tag attributes
+        -- @tag.delimiter                       ; XML tag delimiter
 
-        -- Tags (Tag) {{{
-        -- @tag                                        ; XML tag names
-        -- @tag.attribute                              ; XML tag attributes
-        -- @tag.delimiter                              ; XML tag delimiter
-        -- }}}
+        ["@tag"] = { link = "Label" },
+        ["@tag.attribute"] = { link = "@property" },
+        ["@tag.delimiter"] = { link = "Delimiter" },
 
-        -- LSP Semantic Token Groups
-        ["@lsp.type.boolean"] = { link = "@boolean" },
-        ["@lsp.type.builtinType"] = { link = "@type.builtin" },
-        ["@lsp.type.comment"] = { link = "@none" },
-        ["@lsp.type.decorator"] = { link = "@attribute" },
-        ["@lsp.type.deriveHelper"] = { link = "@attribute" },
-        ["@lsp.type.enum"] = { link = "@type" },
-        ["@lsp.type.enumMember"] = { link = "@constant" },
-        ["@lsp.type.escapeSequence"] = { link = "@string.escape" },
-        ["@lsp.type.formatSpecifier"] = { link = "@punctuation.special" },
-        ["@lsp.type.generic"] = { link = "@variable" },
-        ["@lsp.type.interface"] = { fg = utils.lighten(c.blue, 0.7) },
-        ["@lsp.type.keyword"] = { link = "@keyword" },
-        ["@lsp.type.lifetime"] = { link = "@storageclass" },
-        ["@lsp.type.namespace"] = { link = "@namespace" },
-        ["@lsp.type.number"] = { link = "@number" },
-        ["@lsp.type.operator"] = { link = "@operator" },
-        ["@lsp.type.parameter"] = { link = "@parameter" },
-        ["@lsp.type.property"] = { link = "@property" },
-        ["@lsp.type.selfKeyword"] = { link = "@variable.builtin" },
-        ["@lsp.type.selfTypeKeyword"] = { link = "@variable.builtin" },
-        ["@lsp.type.string"] = { link = "@string" },
-        ["@lsp.type.typeAlias"] = { link = "@type.definition" },
-        ["@lsp.type.unresolvedReference"] = { undercurl = opts.undercurl, sp = c.error },
-        ["@lsp.type.variable"] = { link = "@variable" },
-        ["@lsp.typemod.class.defaultLibrary"] = { link = "@type.builtin" },
-        ["@lsp.typemod.enum.defaultLibrary"] = { link = "@type.builtin" },
-        ["@lsp.typemod.enumMember.defaultLibrary"] = { link = "@constant.builtin" },
-        ["@lsp.typemod.function.defaultLibrary"] = { link = "@function.builtin" },
-        ["@lsp.typemod.keyword.async"] = { link = "@keyword.coroutine" },
-        ["@lsp.typemod.keyword.injected"] = { link = "@keyword" },
-        ["@lsp.typemod.macro.defaultLibrary"] = { link = "@function.builtin" },
-        ["@lsp.typemod.method.defaultLibrary"] = { link = "@function.builtin" },
-        ["@lsp.typemod.operator.injected"] = { link = "@operator" },
-        ["@lsp.typemod.string.injected"] = { link = "@string" },
-        ["@lsp.typemod.struct.defaultLibrary"] = { link = "@type.builtin" },
-        ["@lsp.typemod.type.defaultLibrary"] = { fg = utils.darken(c.blue, 0.8) },
-        ["@lsp.typemod.typeAlias.defaultLibrary"] = { fg = utils.darken(c.blue, 0.8) },
-        ["@lsp.typemod.variable.callable"] = { link = "@function" },
-        ["@lsp.typemod.variable.defaultLibrary"] = { link = "@variable.builtin" },
-        ["@lsp.typemod.variable.injected"] = { link = "@variable" },
-        ["@lsp.typemod.variable.static"] = { link = "@constant" },
+        -- -- Conceal
+        -- @conceal                             ; for captures that are only used for concealing
+
+        -- -- Spell
+        -- @spell                               ; for defining regions to be spellchecked
+        -- @nospell                             ; for defining regions that should NOT be spellchecked
+        -- }}}
 
         -- Diagnostics
         -- :h diagnostic-highlights
@@ -323,6 +304,16 @@ function M.setup(opts)
         healthError = { link = "DiagnosticError" },
         healthSuccess = { link = "DiagnosticOk" },
         healthWarning = { link = "DiagnosticWarn" },
+
+        -- diff
+        diffAdded = { fg = c.diff.add },
+        diffRemoved = { fg = c.diff.delete },
+        diffChanged = { fg = c.diff.change },
+        diffOldFile = { fg = c.yellow },
+        diffNewFile = { fg = c.dull_yellow },
+        diffFile = { fg = c.blue },
+        diffLine = { fg = c.comment },
+        diffIndexLine = { fg = c.magenta },
 
         -- LSP highlight
         -- :h lsp-highlight
@@ -361,7 +352,7 @@ function M.setup(opts)
         NvimTreeIndentMarker = { link = "NonText" },
         NvimTreeGitDirty = { fg = c.diff.change },
         NvimTreeGitStaged = { fg = c.diff.add },
-        NvimTreeGitMerge = { fg = c.orange },
+        NvimTreeGitMerge = { fg = c.dull_yellow },
         NvimTreeGitRenamed = { fg = c.diff.change },
         NvimTreeGitNew = { fg = c.diff.add },
         NvimTreeGitDeleted = { fg = c.diff.delete },
@@ -396,6 +387,11 @@ function M.setup(opts)
         IlluminatedWordWrite = { link = "LspReferenceWrite" },
     }
 
+    -- Hide all semantic highlights
+    for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+        vim.api.nvim_set_hl(0, group, {})
+    end
+
     -- Cmp and Navic
     -- :h navic-highlights
     -- :h cmp-highlight
@@ -408,16 +404,16 @@ function M.setup(opts)
         Color           = "Special",
         Constant        = "@constant",
         Constructor     = "@constructor",
-        Enum            = "@lsp.type.enum",
-        EnumMember      = "@lsp.type.enumMember",
+        Enum            = "Structure",
+        EnumMember      = "Constant",
         Event           = "Special",
         Field           = "@field",
         File            = "Normal",
         Folder          = "Directory",
         Function        = "@function",
-        Interface       = "@lsp.type.interface",
+        Interface       = "Structure",
         Key             = "@field",
-        Keyword         = "@lsp.type.keyword",
+        Keyword         = "@keyword",
         Method          = "@method",
         Module          = "@namespace",
         Namespace       = "@namespace",
@@ -430,10 +426,10 @@ function M.setup(opts)
         Reference       = "@text.reference",
         Snippet         = "Conceal",
         String          = "@string",
-        Struct          = "@lsp.type.struct",
+        Struct          = "Structure",
         Text            = "@text",
-        TypeParameter   = "@lsp.type.typeParameter",
-        Unit            = "@lsp.type.struct",
+        TypeParameter   = "TypeDef",
+        Unit            = "Structure",
         Value           = "@string",
         Variable        = "@variable",
     }
