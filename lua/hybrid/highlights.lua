@@ -10,7 +10,7 @@ function M.setup(opts)
         -- :h highlight-default
         -- {{{
         ColorColumn = { bg = c.bg_hard },
-        Conceal = { fg = c.primary },
+        Conceal = { fg = c.dull_blue },
         CurSearch = { fg = c.green, bg = c.bg, reverse = opts.inverse },
         Cursor = { reverse = opts.inverse },
         -- lCursor = {},
@@ -71,7 +71,7 @@ function M.setup(opts)
         TabLineFill = { fg = c.fg, bg = c.bg_hard },
         TabLineSel = { fg = c.fg, bg = c.bg, bold = opts.bold },
         Title = { fg = c.primary, bold = opts.bold },
-        Visual = { bg = c.selection },
+        Visual = { bg = utils.lighten(c.selection, 0.8, c.primary) },
         VisualNOS = { link = "Visual" },
         WarningMsg = { fg = c.diag.warning },
         Whitespace = { link = "NonText" },
@@ -103,7 +103,7 @@ function M.setup(opts)
         -- Keyword = {},
         -- Exception = {},
 
-        PreProc = { fg = c.magenta, italic = opts.italic.emphasis },
+        PreProc = { fg = c.magenta },
         -- Include = {},
         -- Define = {},
         -- Macro = {},
@@ -114,10 +114,10 @@ function M.setup(opts)
         -- Structure = {},
         -- Typedef = {},
 
-        Special = { fg = utils.lighten(c.blue, 0.6) },
+        Special = { fg = c.bright_blue },
         -- SpecialChar = {},
         -- Tag = {},
-        -- Delimiter = {},
+        Delimiter = { fg = c.fg },
         -- SpecialComment = {},
         Debug = { fg = c.dull_yellow },
 
@@ -150,7 +150,7 @@ function M.setup(opts)
         -- @punctuation.bracket                 ; brackets (e.g. `()` / `{}` / `[]`)
         -- @punctuation.special                 ; special symbols (e.g. `{}` in string interpolation)
 
-        ["@punctuation.bracket"] = { fg = c.fg },
+        ["@punctuation.special"] = { link = "Special" },
 
         -- -- Literals
         -- @string (String)                     ; string literals
@@ -180,6 +180,8 @@ function M.setup(opts)
         -- @constructor (Special)               ; constructor calls and definitions
         -- @parameter (Identifier)              ; parameters of a function
 
+        ["@function.builtin"] = { fg = c.red },
+        ["@constructor"] = { fg = c.magenta },
         ["@parameter"] = { fg = c.yellow },
 
         -- -- Keywords
@@ -326,6 +328,39 @@ function M.setup(opts)
         -- :h lspconfig-highlight
         LspInfoBorder = { link = "FloatBorder" },
 
+        -- -- LSP Semantic Token
+        -- :h lsp-semantic-highlight
+        -- {{{
+        -- for the type
+        ["@lsp.type.namespace"] = { link = "@namespace" },
+        -- ["@lsp.type.class"] = {},
+        -- ["@lsp.type.enum"] = {},
+        -- ["@lsp.type.interface"] = {},
+        -- ["@lsp.type.struct"] = {},
+        -- ["@lsp.type.typeParameter"] = {},
+        ["@lsp.type.type"] = { link = "@type" },
+        ["@lsp.type.parameter"] = { link = "@parameter" },
+        ["@lsp.type.variable"] = {}, -- use treesitter styles
+        ["@lsp.type.property"] = { link = "@property" },
+        -- ["@lsp.type.enumMember"] = {},
+        -- ["@lsp.type.decorator"] = {},
+        -- ["@lsp.type.event"] = {},
+        ["@lsp.type.function"] = { link = "@function" },
+        ["@lsp.type.method"] = { link = "@method" },
+        ["@lsp.type.macro"] = { link = "@function.macro" },
+        ["@lsp.type.label"] = { link = "@label" },
+        ["@lsp.type.comment"] = {}, -- use treesitter styles
+        ["@lsp.type.string"] = { link = "@string" },
+        ["@lsp.type.keyword"] = { link = "@keyword" },
+        ["@lsp.type.number"] = { link = "@number" },
+        -- ["@lsp.type.regexp"] = {},
+        ["@lsp.type.operator"] = { link = "@operator" },
+
+        -- for each modifier
+        ["@lsp.typemod.function.defaultLibrary"] = { link = "@function.builtin" },
+        ["@lsp.typemod.variable.defaultLibrary"] = { link = "@variable.builtin" },
+        -- }}}
+
         -- WhichKey
         -- :h which-key.nvim-which-key-colors
         WhichKey = { fg = c.primary },
@@ -364,7 +399,7 @@ function M.setup(opts)
         DashboardFooter = { fg = c.primary },
 
         -- BufferLine
-        BufferLineIndicatorSelected = { fg = c.float.border },
+        BufferLineIndicatorSelected = { fg = c.primary },
         BufferLineOffsetSeparator = { link = "WinSeparator" },
 
         -- Cmp
@@ -385,7 +420,6 @@ function M.setup(opts)
         IlluminatedWordText = { link = "LspReferenceText" },
         IlluminatedWordRead = { link = "LspReferenceRead" },
         IlluminatedWordWrite = { link = "LspReferenceWrite" },
-    }
 
     -- Hide all semantic highlights
     for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
@@ -395,7 +429,7 @@ function M.setup(opts)
     -- Cmp and Navic
     -- :h navic-highlights
     -- :h cmp-highlight
-
+    -- {{{
     -- stylua: ignore start
     local kinds = {
         Array           = "@punctuation.bracket",
@@ -438,12 +472,11 @@ function M.setup(opts)
     local kind_groups = { "NavicIcons%s", "CmpItemKind%s" }
 
     for kind, link in pairs(kinds) do
-        local base = "LspKind" .. kind
-        highlights[base] = { link = link }
         for _, plugin in pairs(kind_groups) do
-            highlights[plugin:format(kind)] = { link = base }
+            highlights[plugin:format(kind)] = { link = link }
         end
     end
+    -- }}}
 
     -- Terminal
     if opts.terminal_colors then
