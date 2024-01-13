@@ -421,10 +421,44 @@ function M.setup(opts)
         IlluminatedWordRead = { link = "LspReferenceRead" },
         IlluminatedWordWrite = { link = "LspReferenceWrite" },
 
-    -- Hide all semantic highlights
-    for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-        vim.api.nvim_set_hl(0, group, {})
-    end
+        -- nvim-dap-ui
+        -- source https://github.com/rcarriga/nvim-dap-ui/blob/master/lua/dapui/config/highlights.lua
+        debugPC = { bg = utils.darken(c.yellow, 0.1, c.bg) },
+        debugBreakpoint = { fg = c.blue, bg = utils.darken(c.blue, 0.1, c.bg) },
+        DapUINormal = { link = "Normal" },
+        DapUIVariable = { link = "Normal" },
+        DapUIScope = { fg = c.cyan },
+        DapUIType = { fg = c.magenta },
+        DapUIValue = { link = "Normal" },
+        DapUIModifiedValue = { fg = c.cyan, bold = opts.bold },
+        DapUIDecoration = { fg = c.cyan },
+        DapUIThread = { fg = c.green },
+        DapUIStoppedThread = { fg = c.cyan },
+        DapUIFrameName = { link = "Normal" },
+        DapUISource = { fg = c.magenta },
+        DapUILineNumber = { fg = c.cyan },
+        DapUIFloatNormal = { link = "NormalFloat" },
+        DapUIFloatBorder = { fg = c.cyan },
+        DapUIWatchesEmpty = { fg = c.red },
+        DapUIWatchesValue = { fg = c.green },
+        DapUIWatchesError = { fg = c.red },
+        DapUIBreakpointsPath = { fg = c.cyan },
+        DapUIBreakpointsInfo = { fg = c.green },
+        DapUIBreakpointsCurrentLine = { fg = c.green, bold = opts.bold },
+        DapUIBreakpointsLine = { link = "DapUILineNumber" },
+        DapUIBreakpointsDisabledLine = { fg = c.fg_soft },
+        DapUICurrentFrameName = { link = "DapUIBreakpointsCurrentLine" },
+        DapUIStepOver = { fg = c.cyan },
+        DapUIStepInto = { fg = c.cyan },
+        DapUIStepBack = { fg = c.cyan },
+        DapUIStepOut = { fg = c.cyan },
+        DapUIStop = { fg = c.red },
+        DapUIPlayPause = { fg = c.green },
+        DapUIRestart = { fg = c.green },
+        DapUIUnavailable = { fg = c.fg_soft },
+        DapUIWinSelect = { fg = c.cyan, bold = opts.bold },
+        DapUIEndofBuffer = { link = "EndofBuffer" },
+    }
 
     -- Cmp and Navic
     -- :h navic-highlights
