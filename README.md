@@ -2,22 +2,22 @@
 
 # hybrid.nvim
 
-A dark [Neovim](https://github.com/neovim/neovim) theme written in [Lua](https://www.lua.org)
-
-<details open>
-<summary>Screenshot</summary>
-<br>
-
-![Screenshot](./screenshot.png)
-
-</details>
-<br>
+A dark [Neovim](https://github.com/neovim/neovim) theme written in [Lua](https://www.lua.org).
 
 <details open>
 <summary>Palette</summary>
 <br>
 
 ![Palette](./palette.png)
+
+</details>
+<br>
+
+<details open>
+<summary>Screenshot</summary>
+<br>
+
+![Screenshot](./screenshot.png)
 
 </details>
 <br>
@@ -30,13 +30,13 @@ Neovim 0.8.0+
 
 ## Installing
 
-### Using `packer`
+Using `packer`
 
 ```lua
 use { "HoNamDuong/hybrid.nvim" }
 ```
 
-### Using `lazy.nvim`
+Using `lazy.nvim`
 
 ```lua
 {
@@ -79,13 +79,9 @@ require("hybrid").setup({
     strikethrough = true,
     inverse = true,
     transparent = false,
-    -- You can override specific highlights to use other groups or a hex color
     overrides = function(highlights, colors) end,
 })
-vim.cmd.colorscheme("hybrid")
 ```
-
-**VERY IMPORTANT**: Make sure to call setup() **BEFORE** calling the colorscheme command, to use your custom configs
 
 ## Overrides
 
@@ -112,21 +108,20 @@ require("hybrid").setup({
         }
     end,
 })
-vim.cmd.colorscheme("hybrid")
 ```
 
 Please note that the override values must follow the attributes from the highlight group map, such as:
 
-- **fg** - foreground color
-- **bg** - background color
-- **bold** - true or false for bold font
-- **italic** - true or false for italic font
+-   **fg** - foreground color
+-   **bg** - background color
+-   **bold** - true or false for bold font
+-   **italic** - true or false for italic font
 
-Other values can be seen in [`synIDattr`](<https://neovim.io/doc/user/builtin.html#synIDattr()>)
+Other values can be seen in [here](<https://neovim.io/doc/user/builtin.html#synIDattr()>).
 
 ## Inspiration
 
-- [vim-hybrid](https://github.com/w0ng/vim-hybrid)
-- [tokyonight.nvim](https://github.com/folke/tokyonight.nvim)
-- [gruvbox.nvim](https://github.com/ellisonleao/gruvbox.nvim)
-- [kanagawa.nvim](https://github.com/rebelot/kanagawa.nvim)
+-   [vim-hybrid](https://github.com/w0ng/vim-hybrid)
+-   [tokyonight.nvim](https://github.com/folke/tokyonight.nvim)
+-   [gruvbox.nvim](https://github.com/ellisonleao/gruvbox.nvim)
+-   [kanagawa.nvim](https://github.com/rebelot/kanagawa.nvim)
