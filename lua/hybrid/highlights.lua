@@ -18,10 +18,10 @@ function M.setup(opts)
         CursorColumn = { link = "CursorLine" },
         CursorLine = { bg = c.line },
         Directory = { fg = c.blue },
-        DiffAdd = { bg = utils.darken(c.diff.add, 0.1, c.bg) },
-        DiffChange = { bg = utils.darken(c.diff.change, 0.1, c.bg) },
-        DiffDelete = { bg = utils.darken(c.diff.delete, 0.1, c.bg) },
-        DiffText = { bg = utils.darken(c.diff.text, 0.6, utils.darken(c.diff.change, 0.1, c.bg)) },
+        DiffAdd = { bg = utils.darken(c.diff.add, 0.2, c.bg) },
+        DiffChange = { bg = utils.darken(c.diff.change, 0.2, c.bg) },
+        DiffDelete = { bg = utils.darken(c.diff.delete, 0.2, c.bg) },
+        DiffText = { bg = utils.darken(c.diff.text, 0.4, utils.darken(c.diff.change, 0.2, c.bg)) },
         EndOfBuffer = { fg = c.fg_soft },
         -- TermCursor  = {},
         -- TermCursorNC= {},
@@ -32,7 +32,7 @@ function M.setup(opts)
         SignColumn = { fg = c.fg_soft, bg = opts.transparent and c.none or c.bg },
         IncSearch = { fg = c.dull_yellow, bg = c.bg, reverse = opts.inverse },
         -- Substitute = {},
-        LineNr = { fg = c.bg_soft, bg = opts.transparent and c.none or c.bg },
+        LineNr = { fg = c.bg_soft },
         -- LineNrAbove = {},
         -- LineNrBelow = {},
         CursorLineNr = { fg = c.primary, bg = c.line },
@@ -76,8 +76,8 @@ function M.setup(opts)
         WarningMsg = { fg = c.diag.warning },
         Whitespace = { link = "NonText" },
         WildMenu = { fg = c.fg, bg = c.selection, bold = opts.bold },
-        WinBar = { fg = c.fg, bg = c.bg },
-        WinBarNC = { fg = c.fg, bg = c.bg },
+        WinBar = { fg = c.fg, bg = opts.transparent and c.none or c.bg },
+        WinBarNC = { fg = c.fg, bg = opts.transparent and c.none or c.bg },
         -- }}}
 
         -- Syntax highlighting
@@ -381,17 +381,27 @@ function M.setup(opts)
 
         -- NvimTree
         -- :h nvim-tree-highlight
-        NvimTreeRootFolder = { fg = c.blue, bold = opts.bold },
+        -- {{{
+        -- File Text:
         NvimTreeSymlink = { fg = c.cyan },
+        NvimTreeExecFile = { fg = c.green, bold = opts.bold },
+        NvimTreeSpecialFile = { fg = c.yellow, underline = opts.underline },
+        NvimTreeImageFile = { fg = c.magenta },
+        -- Folder Text:
+        NvimTreeRootFolder = { fg = c.blue, bold = opts.bold },
+        -- Indent:
+        NvimTreeIndentMarker = { fg = c.fg_soft },
+        -- Picker:
         NvimTreeWindowPicker = { fg = c.primary, bg = c.line, bold = opts.bold },
-        NvimTreeIndentMarker = { link = "NonText" },
-        NvimTreeGitDirty = { fg = c.diff.change },
-        NvimTreeGitStaged = { fg = c.diff.add },
-        NvimTreeGitMerge = { fg = c.dull_yellow },
-        NvimTreeGitRenamed = { fg = c.diff.change },
-        NvimTreeGitNew = { fg = c.diff.add },
-        NvimTreeGitDeleted = { fg = c.diff.delete },
-        NvimTreeGitIgnored = { fg = c.white },
+        -- Git Icon:
+        NvimTreeGitDeletedIcon = { fg = c.diff.delete },
+        NvimTreeGitDirtyIcon = { fg = c.diff.change },
+        NvimTreeGitIgnoredIcon = { fg = c.comment },
+        NvimTreeGitMergeIcon = { fg = c.dull_yellow },
+        NvimTreeGitNewIcon = { fg = c.diff.add },
+        NvimTreeGitRenamedIcon = { fg = c.diff.change },
+        NvimTreeGitStagedIcon = { fg = c.diff.add },
+        -- }}}
 
         -- Dashboard
         -- :h dashboard-configuration-theme-config
