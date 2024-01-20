@@ -27,7 +27,7 @@ function M.setup(opts)
         -- TermCursorNC= {},
         ErrorMsg = { fg = c.diag.error },
         WinSeparator = { fg = c.fg_soft, bg = opts.transparent and c.none or c.bg },
-        Folded = { fg = c.fg_soft, bg = c.line, italic = opts.italic.folds },
+        Folded = { fg = c.fg, bg = c.line, italic = opts.italic.folds },
         FoldColumn = { fg = c.fg_soft, bg = opts.transparent and c.none or c.bg },
         SignColumn = { fg = c.fg_soft, bg = opts.transparent and c.none or c.bg },
         IncSearch = { fg = c.dull_yellow, bg = c.bg, reverse = opts.inverse },
@@ -127,161 +127,176 @@ function M.setup(opts)
 
         Error = { fg = c.diag.error, reverse = opts.inverse },
 
-        Todo = { fg = c.diag.hint, reverse = opts.inverse }, -- TODO FIXME XXX
+        Todo = { fg = c.diag.ok, reverse = opts.inverse }, -- TODO FIXME XXX
         -- }}}
 
         -- Treesitter
         -- :h treesitter-highlight
         -- Source https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
         -- {{{
-        -- -- Misc
-        -- @comment (Comment)                   ; line and block comments
-        -- @comment.documentation               ; comments documenting code
-        -- @error                               ; syntax/parser errors
-        -- @none                                ; completely disable the highlight
-        -- @preproc (PreProc)                   ; various preprocessor directives & shebangs
-        -- @define (Define)                     ; preprocessor definition directives
-        -- @operator (Operator)                 ; symbolic operators (e.g. `+` / `*`)
+        -- -- Identifiers
+        -- @variable            ; various variable names
+        -- @variable.builtin    ; built-in variable names (e.g. `this`)
+        -- @variable.parameter  ; parameters of a function
+        -- @variable.member     ; object and struct fields
 
-        ["@none"] = {},
+        -- @constant            ; constant identifiers
+        -- @constant.builtin    ; built-in constant values
+        -- @constant.macro      ; constants defined by the preprocessor
 
-        -- -- Punctuation (Delimiter)
-        -- @punctuation.delimiter               ; delimiters (e.g. `;` / `.` / `,`)
-        -- @punctuation.bracket                 ; brackets (e.g. `()` / `{}` / `[]`)
-        -- @punctuation.special                 ; special symbols (e.g. `{}` in string interpolation)
+        -- @module              ; modules or namespaces
+        -- @module.builtin      ; built-in modules or namespaces
+        -- @label               ; GOTO and other labels (e.g. `label:` in C), including heredoc labels
 
-        ["@punctuation.special"] = { link = "Special" },
+        ["@variable.builtin"] = { fg = c.red },
+        ["@variable.parameter"] = { fg = c.yellow },
+        ["@variable.member"] = { fg = c.cyan },
+
+        ["@module.builtin"] = { fg = c.red },
 
         -- -- Literals
-        -- @string (String)                     ; string literals
-        -- @string.documentation                ; string documenting code (e.g. Python docstrings)
-        -- @string.regex                        ; regular expressions
-        -- @string.escape (SpecialChar)         ; escape sequences
-        -- @string.special (SpecialChar)        ; other special strings (e.g. dates)
+        -- @string                 ; string literals
+        -- @string.documentation   ; string documenting code (e.g. Python docstrings)
+        -- @string.regexp          ; regular expressions
+        -- @string.escape          ; escape sequences
+        -- @string.special         ; other special strings (e.g. dates)
+        -- @string.special.symbol  ; symbols or atoms
+        -- @string.special.url     ; URIs (e.g. hyperlinks)
+        -- @string.special.path    ; filenames
 
-        -- @character (Character)               ; character literals
-        -- @character.special (SpecialChar)     ; special characters (e.g. wildcards)
+        -- @character              ; character literals
+        -- @character.special      ; special characters (e.g. wildcards)
 
-        -- @boolean (Boolean)                   ; boolean literals
-        -- @number (Number)                     ; numeric literals
-        -- @float (Float)                       ; floating-point number literals
+        -- @boolean                ; boolean literals
+        -- @number                 ; numeric literals
+        -- @number.float           ; floating-point number literals
 
+        ["@string.regexp"] = { fg = c.cyan },
         ["@string.escape"] = { fg = c.magenta },
 
+        -- -- Types
+        -- @type             ; type or class definitions and annotations
+        -- @type.builtin     ; built-in types
+        -- @type.definition  ; identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
+        -- @type.qualifier   ; type qualifiers (e.g. `const`)
+
+        -- @attribute        ; attribute annotations (e.g. Python decorators)
+        -- @property         ; the key in key/value pairs
+
+        ["@property"] = { fg = c.cyan },
+
         -- -- Functions
-        -- @function (Function)                 ; function definitions
-        -- @function.builtin (Special)          ; built-in functions
-        -- @function.call                       ; function calls
-        -- @function.macro (Macro)              ; preprocessor macros
+        -- @function             ; function definitions
+        -- @function.builtin     ; built-in functions
+        -- @function.call        ; function calls
+        -- @function.macro       ; preprocessor macros
 
-        -- @method (Function)                   ; method definitions
-        -- @method.call                         ; method calls
+        -- @function.method      ; method definitions
+        -- @function.method.call ; method calls
 
-        -- @constructor (Special)               ; constructor calls and definitions
-        -- @parameter (Identifier)              ; parameters of a function
+        -- @constructor          ; constructor calls and definitions
+        -- @operator             ; symbolic operators (e.g. `+` / `*`)
 
-        ["@function.builtin"] = { fg = c.red },
         ["@constructor"] = { fg = c.magenta },
-        ["@parameter"] = { fg = c.yellow },
+        ["@function.builtin"] = { fg = c.red },
 
         -- -- Keywords
-        -- @keyword (Keyword)                   ; various keywords
-        -- @keyword.coroutine                   ; keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
-        -- @keyword.function                    ; keywords that define a function (e.g. `func` in Go, `def` in Python)
-        -- @keyword.operator                    ; operators that are English words (e.g. `and` / `or`)
-        -- @keyword.return                      ; keywords like `return` and `yield`
+        -- @keyword             ; keywords not fitting into specific categories
+        -- @keyword.coroutine   ; keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
+        -- @keyword.function    ; keywords that define a function (e.g. `func` in Go, `def` in Python)
+        -- @keyword.operator    ; operators that are English words (e.g. `and` / `or`)
+        -- @keyword.import      ; keywords for including modules (e.g. `import` / `from` in Python)
+        -- @keyword.storage     ; modifiers that affect storage in memory or life-time
+        -- @keyword.repeat      ; keywords related to loops (e.g. `for` / `while`)
+        -- @keyword.return      ; keywords like `return` and `yield`
+        -- @keyword.debug       ; keywords related to debugging
+        -- @keyword.exception   ; keywords related to exceptions (e.g. `throw` / `catch`)
 
-        -- @conditional (Conditional)           ; keywords related to conditionals (e.g. `if` / `else`)
-        -- @conditional.ternary                 ; ternary operator (e.g. `?` / `:`)
+        -- @keyword.conditional         ; keywords related to conditionals (e.g. `if` / `else`)
+        -- @keyword.conditional.ternary ; ternary operator (e.g. `?` / `:`)
 
-        -- @repeat (Repeat)                     ; keywords related to loops (e.g. `for` / `while`)
-        -- @debug (Debug)                       ; keywords related to debugging
-        -- @label (Label)                       ; GOTO and other labels (e.g. `label:` in C)
-        -- @include (Include)                   ; keywords for including modules (e.g. `import` / `from` in Python)
-        -- @exception (Exception)               ; keywords related to exceptions (e.g. `throw` / `catch`)
+        -- @keyword.directive         ; various preprocessor directives & shebangs
+        -- @keyword.directive.define  ; preprocessor definition directives
 
         ["@keyword.operator"] = { link = "@operator" },
 
-        -- -- Types
-        -- @type (Type)                         ; type or class definitions and annotations
-        -- @type.builtin                        ; built-in types
-        -- @type.definition (Typedef)           ; identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
-        -- @type.qualifier                      ; type qualifiers (e.g. `const`)
+        -- -- Punctuation
+        -- @punctuation.delimiter ; delimiters (e.g. `;` / `.` / `,`)
+        -- @punctuation.bracket   ; brackets (e.g. `()` / `{}` / `[]`)
+        -- @punctuation.special   ; special symbols (e.g. `{}` in string interpolation)
 
-        -- @storageclass (StorageClass)         ; modifiers that affect storage in memory or life-time
-        -- @attribute                           ; attribute annotations (e.g. Python decorators)
-        -- @field (Identifier)                  ; object and struct fields
-        -- @property (Identifier)               ; similar to `@field`
+        ["@punctuation.special"] = { link = "Special" },
 
-        ["@field"] = { fg = c.cyan },
-        ["@property"] = { fg = c.cyan },
+        -- -- Comments
+        -- @comment               ; line and block comments
+        -- @comment.documentation ; comments documenting code
 
-        -- -- Identifiers
-        -- @variable (Identifier)               ; various variable names
-        -- @variable.builtin                    ; built-in variable names (e.g. `this`)
+        -- @comment.error         ; error-type comments (e.g., `DEPRECATED:`)
+        -- @comment.warning       ; warning-type comments (e.g., `WARNING:`, `FIX:`)
+        -- @comment.hint          ; note-type comments (e.g., `NOTE:`)
+        -- @comment.info          ; info-type comments
+        -- @comment.todo          ; todo-type comments (e.g-, `TODO:`, `WIP:`)
 
-        -- @constant (Constant)                 ; constant identifiers
-        -- @constant.builtin (Special)          ; built-in constant values
-        -- @constant.macro (Define)             ; constants defined by the preprocessor
+        ["@comment.error"] = { fg = c.diag.error, reverse = opts.inverse },
+        ["@comment.warning"] = { fg = c.diag.warning, reverse = opts.inverse },
+        ["@comment.hint"] = { fg = c.diag.hint, reverse = opts.inverse },
+        ["@comment.info"] = { fg = c.diag.info, reverse = opts.inverse },
+        ["@comment.todo"] = { fg = c.diag.ok, reverse = opts.inverse },
 
-        -- @namespace (Identifier)              ; modules or namespaces
-        -- @symbol                              ; symbols or atoms
+        -- -- Markup
+        -- Mainly for markup languages
+        -- @markup.strong         ; bold text
+        -- @markup.italic         ; text with emphasis
+        -- @markup.strikethrough  ; strikethrough text
+        -- @markup.underline      ; underlined text (only for literal underline markup!)
 
-        ["@variable.builtin"] = { fg = c.red },
-        ["@namespace.builtin"] = { fg = c.red },
+        -- @markup.heading        ; headings, titles (including markers)
 
-        -- -- Text
-        -- @text                                ; non-structured text
-        -- @text.strong                         ; bold text
-        -- @text.emphasis                       ; text with emphasis
-        -- @text.underline (Underlined)         ; underlined text
-        -- @text.strike                         ; strikethrough text
-        -- @text.title (Title)                  ; text that is part of a title
-        -- @text.quote                          ; text quotations
-        -- @text.uri (Underlined)               ; URIs (e.g. hyperlinks)
-        -- @text.math                           ; math environments (e.g. `$ ... $` in LaTeX)
-        -- @text.environment                    ; text environments of markup languages
-        -- @text.environment.name               ; text indicating the type of an environment
-        -- @text.reference (Identifier)         ; text references, footnotes, citations, etc.
+        -- @markup.quote          ; block quotes
+        -- @markup.math           ; math environments (e.g. `$ ... $` in LaTeX)
+        -- @markup.environment    ; environments (e.g. in LaTeX)
 
-        -- @text.literal (Comment)              ; literal or verbatim text (e.g., inline code)
-        -- @text.literal.block                  ; literal or verbatim text as a stand-alone block
-        --                                      ; (use priority 90 for blocks with injections)
+        -- @markup.link           ; text references, footnotes, citations, etc.
+        -- @markup.link.label     ; link, reference descriptions
+        -- @markup.link.url       ; URL-style links
 
-        -- @text.todo (Todo)                    ; TODO notes
-        -- @text.note                           ; INFO notes
-        -- @text.warning                        ; WARNING notes
-        -- @text.danger                         ; ERROR notes
+        -- @markup.raw            ; literal or verbatim text (e.g., inline code)
+        -- @markup.raw.block      ; literal or verbatim text as a stand-alone block
+        --                        ; (use priority 90 for blocks with injections)
 
-        -- @text.diff.add                       ; added text (for diff files)
-        -- @text.diff.delete                    ; deleted text (for diff files)
+        -- @markup.list           ; list markers
+        -- @markup.list.checked   ; checked todo-style list markers
+        -- @markup.list.unchecked ; unchecked todo-style list markers
 
-        ["@text.strong"] = { bold = opts.bold },
-        ["@text.emphasis"] = { italic = opts.italic.emphasis },
-        ["@text.strike"] = { strikethrough = opts.strikethrough },
+        -- @diff.plus       ; added text (for diff files)
+        -- @diff.minus      ; deleted text (for diff files)
+        -- @diff.delta      ; changed text (for diff files)
 
-        ["@text.literal"] = { link = "String" },
+        -- @tag           ; XML tag names
+        -- @tag.attribute ; XML tag attributes
+        -- @tag.delimiter ; XML tag delimiters
 
-        ["@text.todo"] = { fg = c.diag.hint, reverse = opts.inverse },
-        ["@text.note"] = { fg = c.diag.info, reverse = opts.inverse },
-        ["@text.warning"] = { fg = c.diag.warning, reverse = opts.inverse },
-        ["@text.danger"] = { fg = c.diag.error, reverse = opts.inverse },
+        ["@markup.strong"] = { bold = opts.bold },
+        ["@markup.italic"] = { italic = opts.italic.emphasis },
+        ["@markup.strikethrough"] = { strikethrough = opts.strikethrough },
+        ["@markup.underline"] = { underline = opts.underline },
 
-        -- -- Tags
-        -- @tag (Tag)                           ; XML tag names
-        -- @tag.attribute                       ; XML tag attributes
-        -- @tag.delimiter                       ; XML tag delimiter
+        ["@markup.heading"] = { link = "Title" },
+
+        ["@markup.link"] = { link = "Constant" },
+
+        ["@markup.raw"] = { link = "String" },
 
         ["@tag"] = { link = "Label" },
         ["@tag.attribute"] = { link = "@property" },
         ["@tag.delimiter"] = { link = "Delimiter" },
 
-        -- -- Conceal
-        -- @conceal                             ; for captures that are only used for concealing
+        -- -- Non-highlighting captures
+        -- @none    ; completely disable the highlight
+        -- @conceal ; captures that are only meant to be concealed
 
-        -- -- Spell
-        -- @spell                               ; for defining regions to be spellchecked
-        -- @nospell                             ; for defining regions that should NOT be spellchecked
+        -- @spell   ; for defining regions to be spellchecked
+        -- @nospell ; for defining regions that should NOT be spellchecked
         -- }}}
 
         -- Diagnostics
@@ -332,21 +347,21 @@ function M.setup(opts)
         -- :h lsp-semantic-highlight
         -- {{{
         -- for the type
-        ["@lsp.type.namespace"] = { link = "@namespace" },
+        ["@lsp.type.namespace"] = { link = "@module" },
         -- ["@lsp.type.class"] = {},
         -- ["@lsp.type.enum"] = {},
         -- ["@lsp.type.interface"] = {},
         -- ["@lsp.type.struct"] = {},
         -- ["@lsp.type.typeParameter"] = {},
         ["@lsp.type.type"] = { link = "@type" },
-        ["@lsp.type.parameter"] = { link = "@parameter" },
+        ["@lsp.type.parameter"] = { link = "@variable.parameter" },
         ["@lsp.type.variable"] = {}, -- use treesitter styles
         ["@lsp.type.property"] = { link = "@property" },
         -- ["@lsp.type.enumMember"] = {},
         -- ["@lsp.type.decorator"] = {},
         -- ["@lsp.type.event"] = {},
         ["@lsp.type.function"] = { link = "@function" },
-        ["@lsp.type.method"] = { link = "@method" },
+        ["@lsp.type.method"] = { link = "@function.method" },
         ["@lsp.type.macro"] = { link = "@function.macro" },
         ["@lsp.type.label"] = { link = "@label" },
         ["@lsp.type.comment"] = {}, -- use treesitter styles
@@ -483,29 +498,29 @@ function M.setup(opts)
         Constant        = "@constant",
         Constructor     = "@constructor",
         Enum            = "Structure",
-        EnumMember      = "Constant",
+        EnumMember      = "@constant",
         Event           = "Special",
-        Field           = "@field",
-        File            = "Normal",
+        Field           = "@variable.member",
+        File            = "@variable",
         Folder          = "Directory",
         Function        = "@function",
         Interface       = "Structure",
-        Key             = "@field",
+        Key             = "@variable.member",
         Keyword         = "@keyword",
-        Method          = "@method",
-        Module          = "@namespace",
-        Namespace       = "@namespace",
+        Method          = "@function.method",
+        Module          = "@module",
+        Namespace       = "@module",
         Null            = "@constant.builtin",
         Number          = "@number",
         Object          = "@constant",
         Operator        = "@operator",
-        Package         = "@namespace",
+        Package         = "@module",
         Property        = "@property",
-        Reference       = "@text.reference",
+        Reference       = "@markup.link",
         Snippet         = "Conceal",
         String          = "@string",
         Struct          = "Structure",
-        Text            = "@text",
+        Text            = "@comment",
         TypeParameter   = "TypeDef",
         Unit            = "Structure",
         Value           = "@string",
