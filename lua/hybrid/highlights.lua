@@ -127,7 +127,7 @@ function M.setup(opts)
 
         Error = { fg = c.diag.error, reverse = opts.inverse },
 
-        Todo = { fg = c.diag.ok, reverse = opts.inverse }, -- TODO FIXME XXX
+        Todo = { fg = c.diag.hint, reverse = opts.inverse }, -- TODO FIXME XXX
         -- }}}
 
         -- Treesitter
@@ -231,17 +231,15 @@ function M.setup(opts)
         -- @comment               ; line and block comments
         -- @comment.documentation ; comments documenting code
 
-        -- @comment.error         ; error-type comments (e.g., `DEPRECATED:`)
-        -- @comment.warning       ; warning-type comments (e.g., `WARNING:`, `FIX:`)
-        -- @comment.hint          ; note-type comments (e.g., `NOTE:`)
-        -- @comment.info          ; info-type comments
-        -- @comment.todo          ; todo-type comments (e.g-, `TODO:`, `WIP:`)
+        -- @comment.error         ; error-type comments (e.g. `ERROR`, `FIXME`, `DEPRECATED:`)
+        -- @comment.warning       ; warning-type comments (e.g. `WARNING:`, `FIX:`, `HACK:`)
+        -- @comment.todo          ; todo-type comments (e.g. `TODO:`, `WIP:`, `FIXME:`)
+        -- @comment.note          ; note-type comments (e.g. `NOTE:`, `INFO:`, `XXX`)
 
         ["@comment.error"] = { fg = c.diag.error, reverse = opts.inverse },
         ["@comment.warning"] = { fg = c.diag.warning, reverse = opts.inverse },
-        ["@comment.hint"] = { fg = c.diag.hint, reverse = opts.inverse },
-        ["@comment.info"] = { fg = c.diag.info, reverse = opts.inverse },
-        ["@comment.todo"] = { fg = c.diag.ok, reverse = opts.inverse },
+        ["@comment.todo"] = { fg = c.diag.hint, reverse = opts.inverse },
+        ["@comment.note"] = { fg = c.diag.info, reverse = opts.inverse },
 
         -- -- Markup
         -- Mainly for markup languages
