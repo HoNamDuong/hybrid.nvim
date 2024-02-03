@@ -173,6 +173,7 @@ function M.setup(opts)
 
         ["@string.regexp"] = { fg = c.cyan },
         ["@string.escape"] = { fg = c.magenta },
+        ["@string.special.url"] = { underline = opts.underline },
 
         -- -- Types
         -- @type             ; type or class definitions and annotations
@@ -244,8 +245,8 @@ function M.setup(opts)
         -- -- Markup
         -- Mainly for markup languages
         -- @markup.strong         ; bold text
-        -- @markup.italic         ; text with emphasis
-        -- @markup.strikethrough  ; strikethrough text
+        -- @markup.italic         ; italic text
+        -- @markup.strikethrough  ; struck-through text
         -- @markup.underline      ; underlined text (only for literal underline markup!)
 
         -- @markup.heading        ; headings, titles (including markers)
@@ -258,7 +259,7 @@ function M.setup(opts)
         -- @markup.link.label     ; link, reference descriptions
         -- @markup.link.url       ; URL-style links
 
-        -- @markup.raw            ; literal or verbatim text (e.g., inline code)
+        -- @markup.raw            ; literal or verbatim text (e.g. inline code)
         -- @markup.raw.block      ; literal or verbatim text as a stand-alone block
         --                        ; (use priority 90 for blocks with injections)
 
@@ -270,9 +271,9 @@ function M.setup(opts)
         -- @diff.minus      ; deleted text (for diff files)
         -- @diff.delta      ; changed text (for diff files)
 
-        -- @tag           ; XML tag names
-        -- @tag.attribute ; XML tag attributes
-        -- @tag.delimiter ; XML tag delimiters
+        -- @tag           ; XML-style tag names (and similar)
+        -- @tag.attribute ; XML-style tag attributes
+        -- @tag.delimiter ; XML-style tag delimiters
 
         ["@markup.strong"] = { bold = opts.bold },
         ["@markup.italic"] = { italic = opts.italic.emphasis },
@@ -282,6 +283,8 @@ function M.setup(opts)
         ["@markup.heading"] = { link = "Title" },
 
         ["@markup.link"] = { link = "Constant" },
+        ["@markup.link.label"] = { link = "Label" },
+        ["@markup.link.url"] = { underline = opts.underline },
 
         ["@markup.raw"] = { link = "String" },
 
@@ -415,6 +418,22 @@ function M.setup(opts)
         NvimTreeGitRenamedIcon = { fg = c.diff.change },
         NvimTreeGitStagedIcon = { fg = c.diff.add },
         -- }}}
+
+        -- NeoTree
+        -- :h neo-tree-highlights
+        NeoTreeGitAdded = { fg = c.diff.add },
+        NeoTreeGitConflict = { fg = c.dull_yellow },
+        NeoTreeGitDeleted = { fg = c.diff.delete },
+        NeoTreeGitIgnored = { fg = c.comment },
+        NeoTreeGitModified = { fg = c.diff.change },
+        NeoTreeGitUnstaged = { fg = c.diff.change },
+        NeoTreeGitUntracked = { fg = c.diff.add },
+        NeoTreeGitStaged = { fg = c.diff.add },
+        NeoTreeRootName = { fg = c.primary },
+        NeoTreeSymbolicLinkTarget = { fg = c.cyan },
+        NeoTreeFloatTitle = { fg = c.float.title },
+        NeoTreeFileIcon = { fg = c.fg },
+        NeoTreeDimText = { fg = c.bg_soft },
 
         -- Dashboard
         -- :h dashboard-configuration-theme-config
