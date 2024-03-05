@@ -135,18 +135,19 @@ function M.setup(opts)
         -- Source https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights
         -- {{{
         -- -- Identifiers
-        -- @variable            ; various variable names
-        -- @variable.builtin    ; built-in variable names (e.g. `this`)
-        -- @variable.parameter  ; parameters of a function
-        -- @variable.member     ; object and struct fields
+        -- @variable                    ; various variable names
+        -- @variable.builtin            ; built-in variable names (e.g. `this`)
+        -- @variable.parameter          ; parameters of a function
+        -- @variable.parameter.builtin  ; special parameters (e.g. `_`, `it`)
+        -- @variable.member             ; object and struct fields
 
-        -- @constant            ; constant identifiers
-        -- @constant.builtin    ; built-in constant values
-        -- @constant.macro      ; constants defined by the preprocessor
+        -- @constant          ; constant identifiers
+        -- @constant.builtin  ; built-in constant values
+        -- @constant.macro    ; constants defined by the preprocessor
 
-        -- @module              ; modules or namespaces
-        -- @module.builtin      ; built-in modules or namespaces
-        -- @label               ; GOTO and other labels (e.g. `label:` in C), including heredoc labels
+        -- @module            ; modules or namespaces
+        -- @module.builtin    ; built-in modules or namespaces
+        -- @label             ; GOTO and other labels (e.g. `label:` in C), including heredoc labels
 
         ["@variable.builtin"] = { fg = c.red },
         ["@variable.parameter"] = { fg = c.yellow },
@@ -181,8 +182,9 @@ function M.setup(opts)
         -- @type.definition  ; identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
         -- @type.qualifier   ; type qualifiers (e.g. `const`)
 
-        -- @attribute        ; attribute annotations (e.g. Python decorators)
-        -- @property         ; the key in key/value pairs
+        -- @attribute          ; attribute annotations (e.g. Python decorators)
+        -- @attribute.builtin  ; builtin annotations (e.g. `@property` in Python)
+        -- @property           ; the key in key/value pairs
 
         ["@property"] = { fg = c.cyan },
 
@@ -198,20 +200,22 @@ function M.setup(opts)
         -- @constructor          ; constructor calls and definitions
         -- @operator             ; symbolic operators (e.g. `+` / `*`)
 
-        ["@constructor"] = { fg = c.magenta },
         ["@function.builtin"] = { fg = c.red },
 
+        ["@constructor"] = { fg = c.magenta },
+
         -- -- Keywords
-        -- @keyword             ; keywords not fitting into specific categories
-        -- @keyword.coroutine   ; keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
-        -- @keyword.function    ; keywords that define a function (e.g. `func` in Go, `def` in Python)
-        -- @keyword.operator    ; operators that are English words (e.g. `and` / `or`)
-        -- @keyword.import      ; keywords for including modules (e.g. `import` / `from` in Python)
-        -- @keyword.storage     ; modifiers that affect storage in memory or life-time
-        -- @keyword.repeat      ; keywords related to loops (e.g. `for` / `while`)
-        -- @keyword.return      ; keywords like `return` and `yield`
-        -- @keyword.debug       ; keywords related to debugging
-        -- @keyword.exception   ; keywords related to exceptions (e.g. `throw` / `catch`)
+        -- @keyword                   ; keywords not fitting into specific categories
+        -- @keyword.coroutine         ; keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
+        -- @keyword.function          ; keywords that define a function (e.g. `func` in Go, `def` in Python)
+        -- @keyword.operator          ; operators that are English words (e.g. `and` / `or`)
+        -- @keyword.import            ; keywords for including modules (e.g. `import` / `from` in Python)
+        -- @keyword.storage           ; modifiers that affect storage in memory or life-time
+        -- @keyword.type              ; keywords describing composite types (e.g. `struct`, `enum`)
+        -- @keyword.repeat            ; keywords related to loops (e.g. `for` / `while`)
+        -- @keyword.return            ; keywords like `return` and `yield`
+        -- @keyword.debug             ; keywords related to debugging
+        -- @keyword.exception         ; keywords related to exceptions (e.g. `throw` / `catch`)
 
         -- @keyword.conditional         ; keywords related to conditionals (e.g. `if` / `else`)
         -- @keyword.conditional.ternary ; ternary operator (e.g. `?` / `:`)
@@ -232,10 +236,10 @@ function M.setup(opts)
         -- @comment               ; line and block comments
         -- @comment.documentation ; comments documenting code
 
-        -- @comment.error         ; error-type comments (e.g. `ERROR`, `FIXME`, `DEPRECATED:`)
-        -- @comment.warning       ; warning-type comments (e.g. `WARNING:`, `FIX:`, `HACK:`)
-        -- @comment.todo          ; todo-type comments (e.g. `TODO:`, `WIP:`, `FIXME:`)
-        -- @comment.note          ; note-type comments (e.g. `NOTE:`, `INFO:`, `XXX`)
+        -- @comment.error         ; error-type comments (e.g. `ERROR`, `FIXME`, `DEPRECATED`)
+        -- @comment.warning       ; warning-type comments (e.g. `WARNING`, `FIX`, `HACK`)
+        -- @comment.todo          ; todo-type comments (e.g. `TODO`, `WIP`)
+        -- @comment.note          ; note-type comments (e.g. `NOTE`, `INFO`, `XXX`)
 
         ["@comment.error"] = { fg = c.diag.error, reverse = opts.inverse },
         ["@comment.warning"] = { fg = c.diag.warning, reverse = opts.inverse },
@@ -250,10 +254,15 @@ function M.setup(opts)
         -- @markup.underline      ; underlined text (only for literal underline markup!)
 
         -- @markup.heading        ; headings, titles (including markers)
+        -- @markup.heading.1      ; top-level heading
+        -- @markup.heading.2      ; section heading
+        -- @markup.heading.3      ; subsection heading
+        -- @markup.heading.4      ; and so on
+        -- @markup.heading.5      ; and so forth
+        -- @markup.heading.6      ; six levels ought to be enough for anybody
 
         -- @markup.quote          ; block quotes
         -- @markup.math           ; math environments (e.g. `$ ... $` in LaTeX)
-        -- @markup.environment    ; environments (e.g. in LaTeX)
 
         -- @markup.link           ; text references, footnotes, citations, etc.
         -- @markup.link.label     ; link, reference descriptions
