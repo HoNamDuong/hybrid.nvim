@@ -345,8 +345,8 @@ function M.setup(opts)
         -- LSP highlight
         -- :h lsp-highlight
         LspReferenceRead = { bg = c.selection, bold = opts.bold },
-        LspReferenceText = { bg = c.selection, bold = opts.bold },
-        LspReferenceWrite = { bg = c.selection, bold = opts.bold },
+        LspReferenceText = { bg = c.selection },
+        LspReferenceWrite = { bg = c.selection, bold = opts.bold, underline = opts.underline },
         LspSignatureActiveParameter = { link = "Visual" },
 
         -- Lspconfig
