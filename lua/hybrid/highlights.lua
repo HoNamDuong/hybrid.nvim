@@ -442,7 +442,7 @@ function M.setup(opts)
         NeoTreeSymbolicLinkTarget = { fg = c.cyan },
         NeoTreeFloatTitle = { fg = c.float.title },
         NeoTreeFileIcon = { fg = c.fg },
-        NeoTreeDimText = { fg = c.bg_soft },
+        NeoTreeDimText = { fg = c.fg_soft },
 
         -- Dashboard
         -- :h dashboard-configuration-theme-config
