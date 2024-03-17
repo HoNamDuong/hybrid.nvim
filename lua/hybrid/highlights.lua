@@ -180,9 +180,8 @@ function M.setup(opts)
         -- @type             ; type or class definitions and annotations
         -- @type.builtin     ; built-in types
         -- @type.definition  ; identifiers in type definitions (e.g. `typedef <type> <identifier>` in C)
-        -- @type.qualifier   ; type qualifiers (e.g. `const`)
 
-        -- @attribute          ; attribute annotations (e.g. Python decorators)
+        -- @attribute          ; attribute annotations (e.g. Python decorators, Rust lifetimes)
         -- @attribute.builtin  ; builtin annotations (e.g. `@property` in Python)
         -- @property           ; the key in key/value pairs
 
@@ -210,8 +209,8 @@ function M.setup(opts)
         -- @keyword.function          ; keywords that define a function (e.g. `func` in Go, `def` in Python)
         -- @keyword.operator          ; operators that are English words (e.g. `and` / `or`)
         -- @keyword.import            ; keywords for including modules (e.g. `import` / `from` in Python)
-        -- @keyword.storage           ; modifiers that affect storage in memory or life-time
         -- @keyword.type              ; keywords describing composite types (e.g. `struct`, `enum`)
+        -- @keyword.modifier          ; keywords modifying other constructs (e.g. `const`, `static`, `public`)
         -- @keyword.repeat            ; keywords related to loops (e.g. `for` / `while`)
         -- @keyword.return            ; keywords like `return` and `yield`
         -- @keyword.debug             ; keywords related to debugging
