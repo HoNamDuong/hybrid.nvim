@@ -288,13 +288,27 @@ function M.setup(opts)
         ["@markup.strikethrough"] = { strikethrough = opts.strikethrough },
         ["@markup.underline"] = { underline = opts.underline },
 
-        ["@markup.heading"] = { link = "Title" },
+        ["@markup.heading"] = { link = "Title", bold = opts.bold },
+        ["@markup.heading.1"] = { fg = c.bright_yellow, bold = opts.bold },
+        ["@markup.heading.2"] = { fg = c.bright_green, bold = opts.bold },
+        ["@markup.heading.3"] = { fg = c.bright_cyan, bold = opts.bold },
+        ["@markup.heading.4"] = { fg = c.yellow },
+        ["@markup.heading.5"] = { fg = c.green },
+        ["@markup.heading.6"] = { fg = c.cyan },
 
-        ["@markup.link"] = { link = "Constant" },
-        ["@markup.link.label"] = { link = "Label" },
-        ["@markup.link.url"] = { underline = opts.underline },
+        ["@markup.quote"] = { fg = c.blue },
+        ["@markup.math"] = { fg = c.magenta },
 
-        ["@markup.raw"] = { link = "String" },
+        ["@markup.list"] = { fg = c.blue },
+        ["@markup.list.checked"] = { fg = c.green },
+        ["@markup.list.unchecked"] = { fg = c.blue },
+
+        ["@markup.link"] = { fg = c.magenta },
+        ["@markup.link.label"] = { fg = c.bright_blue },
+        ["@markup.link.url"] = { fg = c.cyan, underline = opts.underline },
+
+        ["@markup.raw"] = { bg = c.bg_soft },
+        ["@markup.raw.block"] = { bg = c.bg_soft, fg = c.green },
 
         ["@tag"] = { link = "Label" },
         ["@tag.attribute"] = { link = "@property" },
@@ -306,6 +320,8 @@ function M.setup(opts)
 
         -- @spell   ; for defining regions to be spellchecked
         -- @nospell ; for defining regions that should NOT be spellchecked
+
+        ["@conceal"] = { fg = c.fg_soft },
         -- }}}
 
         -- Diagnostics
