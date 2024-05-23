@@ -39,7 +39,7 @@ function M.setup(opts)
         -- CursorLineFold = {},
         -- CursorLineSign = {},
         MatchParen = { bg = c.selection, bold = opts.bold },
-        -- ModeMsg = {},
+        ModeMsg = { fg = c.primary },
         -- MsgArea = {},
         -- MsgSeparator = {},
         MoreMsg = { fg = c.primary },
@@ -60,6 +60,7 @@ function M.setup(opts)
         Question = { fg = c.primary },
         QuickFixLine = { bg = c.selection, bold = opts.bold },
         Search = { fg = c.yellow, bg = c.bg, reverse = opts.inverse },
+        -- SnippetTabstop = {},
         SpecialKey = { fg = c.primary },
         SpellBad = { sp = c.diag.error, undercurl = opts.undercurl },
         SpellCap = { sp = c.diag.warning, undercurl = opts.undercurl },
@@ -128,6 +129,10 @@ function M.setup(opts)
         Error = { fg = c.diag.error, reverse = opts.inverse },
 
         Todo = { fg = c.diag.hint, reverse = opts.inverse }, -- TODO FIXME XXX
+
+        Added = { fg = c.diff.add },
+        Changed = { fg = c.diff.delete },
+        Removed = { fg = c.diff.change },
         -- }}}
 
         -- Treesitter
@@ -149,6 +154,7 @@ function M.setup(opts)
         -- @module.builtin    ; built-in modules or namespaces
         -- @label             ; GOTO and other labels (e.g. `label:` in C), including heredoc labels
 
+        ["@variable"] = { fg = c.fg },
         ["@variable.builtin"] = { fg = c.red },
         ["@variable.parameter"] = { fg = c.yellow },
         ["@variable.member"] = { fg = c.cyan },
@@ -208,8 +214,8 @@ function M.setup(opts)
         -- @keyword.coroutine         ; keywords related to coroutines (e.g. `go` in Go, `async/await` in Python)
         -- @keyword.function          ; keywords that define a function (e.g. `func` in Go, `def` in Python)
         -- @keyword.operator          ; operators that are English words (e.g. `and` / `or`)
-        -- @keyword.import            ; keywords for including modules (e.g. `import` / `from` in Python)
-        -- @keyword.type              ; keywords describing composite types (e.g. `struct`, `enum`)
+        -- @keyword.import            ; keywords for including or exporting modules (e.g. `import` / `from` in Python)
+        -- @keyword.type              ; keywords describing namespaces and composite types (e.g. `struct`, `enum`)
         -- @keyword.modifier          ; keywords modifying other constructs (e.g. `const`, `static`, `public`)
         -- @keyword.repeat            ; keywords related to loops (e.g. `for` / `while`)
         -- @keyword.return            ; keywords like `return` and `yield`
@@ -280,6 +286,7 @@ function M.setup(opts)
         -- @diff.delta      ; changed text (for diff files)
 
         -- @tag           ; XML-style tag names (and similar)
+        -- @tag.builtin   ; builtin tag names (e.g. HTML5 tags)
         -- @tag.attribute ; XML-style tag attributes
         -- @tag.delimiter ; XML-style tag delimiters
 
