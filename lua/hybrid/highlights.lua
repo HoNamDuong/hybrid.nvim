@@ -131,8 +131,8 @@ function M.setup(opts)
         Todo = { fg = c.diag.hint, reverse = opts.inverse }, -- TODO FIXME XXX
 
         Added = { fg = c.diff.add },
-        Changed = { fg = c.diff.delete },
-        Removed = { fg = c.diff.change },
+        Changed = { fg = c.diff.change },
+        Removed = { fg = c.diff.delete },
         -- }}}
 
         -- Treesitter
