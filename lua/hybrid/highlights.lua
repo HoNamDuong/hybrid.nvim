@@ -48,6 +48,7 @@ function M.setup(opts)
         NormalFloat = { fg = c.fg, bg = c.float.bg },
         FloatBorder = { fg = c.float.border, bg = c.float.bg },
         FloatTitle = { fg = c.float.title, bg = c.float.bg },
+        FloatFooter = { fg = c.float.footer, bg = c.float.bg },
         NormalNC = { fg = c.fg, bg = opts.transparent and c.none or c.bg },
         Pmenu = { fg = c.fg, bg = c.bg_hard },
         PmenuSel = { bg = c.selection, bold = opts.bold },

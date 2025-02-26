@@ -91,8 +91,9 @@ function M.setup()
 
         float = {
             bg          = p.dull_black,
-            border      = p.dull_blue,
+            border      = p.bright_black,
             title       = p.blue,
+            footer      = p.green,
         },
 
         line            = utils.darken(p.bright_black, 0.4, p.black),
