@@ -451,27 +451,6 @@ function M.setup(opts)
         NvimTreeGitStagedIcon = { fg = c.diff.add },
         -- }}}
 
-        -- NeoTree
-        -- :h neo-tree-highlights
-        NeoTreeGitAdded = { fg = c.diff.add },
-        NeoTreeGitConflict = { fg = c.dull_yellow },
-        NeoTreeGitDeleted = { fg = c.diff.delete },
-        NeoTreeGitIgnored = { fg = c.comment },
-        NeoTreeGitModified = { fg = c.diff.change },
-        NeoTreeGitUnstaged = { fg = c.diff.change },
-        NeoTreeGitUntracked = { fg = c.diff.add },
-        NeoTreeGitStaged = { fg = c.diff.add },
-        NeoTreeRootName = { fg = c.primary },
-        NeoTreeSymbolicLinkTarget = { fg = c.cyan },
-        NeoTreeFloatTitle = { fg = c.float.title },
-        NeoTreeFileIcon = { fg = c.fg },
-        NeoTreeDimText = { fg = c.fg_soft },
-
-        -- Dashboard
-        -- :h dashboard-configuration-theme-config
-        DashboardHeader = { fg = c.primary },
-        DashboardFooter = { fg = c.primary },
-
         -- BufferLine
         BufferLineIndicatorSelected = { fg = c.primary },
         BufferLineOffsetSeparator = { link = "WinSeparator" },
@@ -488,12 +467,6 @@ function M.setup(opts)
         -- :h navic-highlights
         NavicSeparator = { fg = c.fg },
         NavicText = { fg = c.fg },
-
-        -- Illuminate
-        -- :h illuminate-highlight-groups
-        IlluminatedWordText = { link = "LspReferenceText" },
-        IlluminatedWordRead = { link = "LspReferenceRead" },
-        IlluminatedWordWrite = { link = "LspReferenceWrite" },
 
         -- nvim-dap-ui
         -- source https://github.com/rcarriga/nvim-dap-ui/blob/master/lua/dapui/config/highlights.lua
