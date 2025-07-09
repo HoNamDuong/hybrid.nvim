@@ -19,7 +19,7 @@ function M.setup(opts)
         CursorLine = { bg = c.line },
         Directory = { fg = c.blue },
         DiffAdd = { bg = utils.darken(c.diff.add, 0.2, c.bg) },
-        DiffChange = { bg = utils.darken(c.diff.change, 0.2, c.bg) },
+        DiffChange = { bg = utils.darken(c.diff.change, 0.05, c.bg) },
         DiffDelete = { bg = utils.darken(c.diff.delete, 0.2, c.bg) },
         DiffText = { bg = utils.darken(c.diff.text, 0.4, utils.darken(c.diff.change, 0.2, c.bg)) },
         EndOfBuffer = { fg = c.fg_soft },
@@ -59,7 +59,7 @@ function M.setup(opts)
         PmenuSbar = { bg = c.bg_hard },
         PmenuThumb = { bg = c.selection },
         Question = { fg = c.primary },
-        QuickFixLine = { bg = c.selection, bold = opts.bold },
+        QuickFixLine = { bold = opts.bold, underline = opts.underline },
         Search = { fg = c.yellow, bg = c.bg, reverse = opts.inverse },
         -- SnippetTabstop = {},
         SpecialKey = { fg = c.primary },
@@ -315,8 +315,8 @@ function M.setup(opts)
         ["@markup.link.label"] = { fg = c.bright_blue },
         ["@markup.link.url"] = { fg = c.cyan, underline = opts.underline },
 
-        ["@markup.raw"] = { bg = c.bg_soft },
-        ["@markup.raw.block"] = { bg = c.bg_soft, fg = c.green },
+        ["@markup.raw"] = { bg = c.line },
+        ["@markup.raw.block"] = { bg = c.line, fg = c.green },
 
         ["@tag"] = { link = "Label" },
         ["@tag.attribute"] = { link = "@property" },
