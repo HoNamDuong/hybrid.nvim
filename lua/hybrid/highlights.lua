@@ -379,6 +379,7 @@ function M.setup(opts)
         LspReferenceText = { bg = c.selection },
         LspReferenceRead = { bg = c.selection, bold = opts.bold },
         LspReferenceWrite = { bg = c.selection, bold = opts.bold, underline = opts.underline },
+        -- LspReferenceTarget = {},
         -- LspInlayHint = {},
         -- LspCodeLens = {},
         -- LspCodeLensSeparator = {},
@@ -456,7 +457,7 @@ function M.setup(opts)
         TelescopeMatching = { fg = c.match, bold = opts.bold },
 
         -- NvimTree
-        -- :h *nvim-tree-highlight-default
+        -- :h nvim-tree-highlight-groups-default
         -- {{{
         -- File Text:
         NvimTreeExecFile = { fg = c.green, bold = opts.bold },
