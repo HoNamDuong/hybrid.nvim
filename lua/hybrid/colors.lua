@@ -94,6 +94,7 @@ function M.setup()
             border      = p.bright_black,
             title       = p.blue,
             footer      = p.green,
+            shadow      = utils.darken(p.dull_black, 0.8),
         },
 
         line            = utils.darken(p.bright_black, 0.4, p.black),
